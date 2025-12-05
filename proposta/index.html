@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposta Técnica - App Gestão de Poços</title>
+    <style>
+      :root {
+        --primary-color: #2c3e50; /* Azul Petróleo Profundo */
+        --secondary-color: #3498db; /* Azul Claro */
+        --accent-color: #e67e22; /* Laranja para destaques */
+        --bg-color: #f4f6f7;
+        --text-color: #333;
+        --light-gray: #ecf0f1;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      header {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        margin: 0;
+        font-size: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        color: #7f8c8d;
+        margin-top: 5px;
+      }
+
+      .section {
+        margin-bottom: 35px;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: 18px;
+        border-left: 5px solid var(--primary-color);
+        padding-left: 10px;
+        margin-bottom: 15px;
+      }
+
+      h3 {
+        font-size: 16px;
+        color: var(--primary-color);
+        margin-top: 0;
+      }
+
+      p,
+      li {
+        font-size: 14px;
+        color: #444;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      ul li {
+        padding: 4px 0;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      ul li::before {
+        content: "•";
+        color: var(--secondary-color);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--light-gray);
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #bdc3c7;
+      }
+
+      .card h3 {
+        margin-top: 0;
+      }
+
+      .no-print {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background-color: #1a252f;
+      }
+
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 12px;
+        color: #95a5a6;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        background-color: var(--light-gray);
+        font-size: 12px;
+        color: #555;
+        margin-top: 6px;
+      }
+
+      .badge-total {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px 12px;
+        background-color: var(--secondary-color);
+        color: #fff;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 13px;
+      }
+
+      .highlight-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        padding: 18px;
+        border-radius: 6px;
+        color: #856404;
+      }
+
+      .investment-box {
+        background: #ecf9f1;
+        border: 1px solid #2ecc71;
+        padding: 20px;
+        border-radius: 6px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 6px 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f3f4;
+        color: #2c3e50;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          padding: 25px;
+        }
+      }
+
+      @media print {
+        body {
+          background-color: white;
+          padding: 0;
+        }
+        .container {
+          box-shadow: none;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          max-width: 100%;
+        }
+        .no-print {
+          display: none;
+        }
+        .card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="no-print">
+      <button onclick="window.print()">🖨️ Imprimir / Salvar como PDF</button>
+    </div>
+
+    <div class="container">
+      <header>
+        <h1>Proposta Técnica</h1>
+        <div class="subtitle">
+          Aplicativo de Gerenciamento de Poços Artesianos
+        </div>
+        <div class="tag">Versão: Estimativa de esforço e investimento</div>
+      </header>
+
+      <div class="section">
+        <h2>1. Visão Geral do Sistema</h2>
+        <p>
+          Esta proposta descreve o escopo funcional, estimativa de esforço e
+          investimento para o desenvolvimento de um aplicativo de gerenciamento
+          de poços artesianos, contemplando:
+        </p>
+        <ul>
+          <li>
+            Aplicativo mobile para coleta de leituras (horímetro/hidrômetro);
+          </li>
+          <li>Painel web administrativo para gestão e relatórios;</li>
+          <li>Backend com regras de negócio, cálculos e notificações;</li>
+          <li>Infraestrutura básica para publicação da solução.</li>
+        </ul>
+        <p>
+          O objetivo é substituir o uso manual de planilhas por uma plataforma
+          moderna, automatizada e segura, com relatórios por período, controle
+          de falhas de coleta e alertas ao administrador.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Perfis de Usuários</h2>
+        <div class="grid-container">
+          <div class="card">
+            <h3>👤 Usuário Coletor</h3>
+            <ul>
+              <li>Recebe notificações no horário configurado.</li>
+              <li>Registra leituras de horímetro e hidrômetro.</li>
+              <li>Visualiza histórico de leituras do seu poço.</li>
+              <li>Acessa relatório por período do seu próprio poço.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🛡️ Administrador</h3>
+            <ul>
+              <li>Gerencia usuários e poços cadastrados.</li>
+              <li>Define horários de coleta e responsáveis.</li>
+              <li>Acompanha relatórios por período e falhas.</li>
+              <li>Recebe alertas de não conformidade nas coletas.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Escopo Funcional Resumido</h2>
+        <ul>
+          <li>Cadastro de poços artesianos e regras de coleta.</li>
+          <li>Cadastro de usuários (coletor e administrador).</li>
+          <li>Registro diário de leituras com cálculo automático.</li>
+          <li>Notificações de coleta e lembretes de hora em hora.</li>
+          <li>Relatórios por período (web e mobile).</li>
+          <li>Relatório de falhas de coleta para auditoria.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>4. Estimativa de Esforço por Área</h2>
+
+        <div class="card">
+          <h3>4.1 Frontend – 95 horas</h3>
+          <p><strong>Aplicativo Mobile (Usuário Coletor) – 59h</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Tarefa</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>F1</td>
+                <td>Setup do projeto mobile</td>
+                <td>4h</td>
+              </tr>
+              <tr>
+                <td>F2</td>
+                <td>Tela de Login + recuperação de senha</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>F3</td>
+                <td>Tela de seleção de poços atribuídos</td>
+                <td>6h</td>
+              </tr>
+              <tr>
+                <td>F4</td>
+                <td>Tela de registro da leitura (horímetro/hidrômetro)</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>F5</td>
+                <td>Validação + integração com API</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>F6</td>
+                <td>Tela de histórico de leituras</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>F7</td>
+                <td>Implementação de notificações push</td>
+                <td>10h</td>
+              </tr>
+              <tr>
+                <td>F9</td>
+                <td>Layout geral e estilização</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>F11</td>
+                <td>Tela de relatório por período (mobile)</td>
+                <td>10h</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top: 16px">
+            <strong>Painel Administrativo Web – 36h</strong>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Tarefa</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>F10</td>
+                <td>Setup do painel web</td>
+                <td>4h</td>
+              </tr>
+              <tr>
+                <td>F11</td>
+                <td>Gestão de usuários (CRUD)</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>F12</td>
+                <td>Gestão de poços + horário de coleta</td>
+                <td>8h</td>
+              </tr>
+              <tr>
+                <td>F13</td>
+                <td>Listagem e filtros de leituras</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>F14</td>
+                <td>Relatório por período (web)</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>F15</td>
+                <td>Relatório de falhas</td>
+                <td>5h</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="badge-total">Total Frontend: 95 horas</div>
+        </div>
+
+        <div class="card" style="margin-top: 25px">
+          <h3>4.2 Backend – 98 horas</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Tarefa</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>B1</td>
+                <td>Setup do backend</td>
+                <td>4h</td>
+              </tr>
+              <tr>
+                <td>B2</td>
+                <td>Configuração do banco + ORM</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>B3</td>
+                <td>Modelagem das tabelas</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>B4</td>
+                <td>CRUD de usuários</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>B5</td>
+                <td>CRUD de poços + regras</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>B6</td>
+                <td>Endpoint de registro de leitura + cálculos</td>
+                <td>12h</td>
+              </tr>
+              <tr>
+                <td>B7</td>
+                <td>Histórico de leituras</td>
+                <td>6h</td>
+              </tr>
+              <tr>
+                <td>B8</td>
+                <td>Motor de cálculos (consumo, horas, vazão)</td>
+                <td>10h</td>
+              </tr>
+              <tr>
+                <td>B9</td>
+                <td>Relatório por período</td>
+                <td>12h</td>
+              </tr>
+              <tr>
+                <td>B10</td>
+                <td>Relatório de falhas</td>
+                <td>6h</td>
+              </tr>
+              <tr>
+                <td>B11</td>
+                <td>Integração de notificações push</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>B12</td>
+                <td>Cron job para verificação diária</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>B13</td>
+                <td>Cron job para lembretes de hora em hora</td>
+                <td>6h</td>
+              </tr>
+              <tr>
+                <td>B14</td>
+                <td>Alerta ao administrador</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>B15</td>
+                <td>Autenticação JWT</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>B16</td>
+                <td>Logs de auditoria</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>B17</td>
+                <td>Permissões e roles</td>
+                <td>3h</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="badge-total">Total Backend: 98 horas</div>
+        </div>
+
+        <div class="card" style="margin-top: 25px">
+          <h3>4.3 Infraestrutura – 32 horas</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Tarefa</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>I1</td>
+                <td>Configuração do servidor (AWS/VPS/Render)</td>
+                <td>7h</td>
+              </tr>
+              <tr>
+                <td>I2</td>
+                <td>Ambientes dev / homolog / produção</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>I3</td>
+                <td>Configuração do banco de dados</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>I4</td>
+                <td>Deploy do painel administrativo</td>
+                <td>5h</td>
+              </tr>
+              <tr>
+                <td>I5</td>
+                <td>Configuração de domínio e SSL</td>
+                <td>4h</td>
+              </tr>
+              <tr>
+                <td>I6</td>
+                <td>Configuração push notifications (FCM/APNs)</td>
+                <td>6h</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="badge-total">Total Infraestrutura: 32 horas</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. Resumo de Esforço e Prazo</h2>
+        <div class="highlight-box">
+          <p><strong>Total de horas estimadas:</strong></p>
+          <ul>
+            <li>Frontend: 95 horas</li>
+            <li>Backend: 98 horas</li>
+            <li>Infraestrutura: 32 horas</li>
+          </ul>
+          <p><strong>Total geral:</strong> 225 horas</p>
+          <p>
+            Considerando uma carga de trabalho de referência de
+            <strong>4 horas produtivas por dia</strong>, o prazo estimado de
+            desenvolvimento é de aproximadamente:
+          </p>
+          <p><strong>225 horas ÷ 4h/dia ≈ 56 dias úteis</strong></p>
+          <p>
+            Equivalente a cerca de <strong>2,5 a 3 meses</strong>, incluindo
+            folga para testes e ajustes.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Investimento</h2>
+
+        <div class="investment-box">
+          <p>
+            O custo de desenvolvimento foi calculado sobre a estimativa total de
+            <strong>225 horas</strong> ao valor de
+            <strong>R$ 50,00/hora</strong>.
+          </p>
+
+          <p style="font-size: 18px; font-weight: bold; margin-top: 10px">
+            ➤ Desenvolvimento do projeto: R$ 11.250,00
+          </p>
+
+          <hr style="margin: 20px 0" />
+
+          <h3>Custos adicionais de infraestrutura</h3>
+
+          <p>
+            <strong>1. VPS Hostinger (KVM 2)</strong><br />
+            Aproximadamente <strong>R$ 32,99/mês</strong> na promoção<br />
+            Total estimado anual: <strong>R$ 395,88/ano</strong>
+          </p>
+
+          <p>
+            <strong>2. Domínio (.com/.com.br)</strong><br />
+            Renovação média: <strong>R$ 150,00/ano</strong>
+          </p>
+
+          <p>
+            <strong>3. Publicação Google Play</strong><br />
+            A Google cobra uma taxa única de:
+            <strong>US$ 25 (aprox. R$ 140,00)</strong><br />
+            <small>Valor pago apenas uma vez para publicar aplicativos.</small>
+          </p>
+
+          <hr style="margin: 20px 0" />
+
+          <h3>Custo anual de manutenção da infraestrutura</h3>
+          <ul>
+            <li>VPS: R$ 395,88/ano</li>
+            <li>Domínio: R$ 150,00/ano</li>
+            <li>Google Play: R$ 140,00 (apenas no primeiro ano)</li>
+          </ul>
+
+          <p style="font-size: 18px; font-weight: bold; margin-top: 10px">
+            ➤ Total estimado do 1º ano: R$ 685,88<br />
+            <span style="font-size: 13px">(nos anos seguintes: R$ 545,88)</span>
+          </p>
+
+          <hr style="margin: 20px 0" />
+
+          <h3>Resumo Geral</h3>
+          <p><strong>Desenvolvimento do Sistema:</strong> R$ 11.250,00</p>
+          <p><strong>Infraestrutura do 1º ano:</strong> R$ 685,88</p>
+
+          <p
+            style="
+              font-size: 20px;
+              font-weight: bold;
+              margin-top: 15px;
+              color: #2c3e50;
+            "
+          >
+            ➤ Investimento Total Inicial:
+            <span style="color: #27ae60">R$ 11.935,88</span>
+          </p>
+
+          <p>
+            O investimento contempla o desenvolvimento completo do aplicativo,
+            painel administrativo, backend, infraestrutura básica, rotinas
+            automáticas, suporte na publicação e acompanhamento técnico durante
+            a homologação.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Próximos Passos</h2>
+        <ul>
+          <li>Validação deste escopo de funcionalidades e esforço.</li>
+          <li>Ajustes finos conforme necessidade específica do cliente.</li>
+          <li>Aprovação formal do orçamento e condições comerciais.</li>
+          <li>Início da fase de prototipação de telas e desenvolvimento.</li>
+        </ul>
+      </div>
+
+      <footer>
+        <p>
+          Proposta técnica e estimativa de esforço para desenvolvimento de
+          aplicativo de gestão de poços artesianos.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

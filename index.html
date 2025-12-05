@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposta Técnica - App Gestão de Poços</title>
+    <style>
+      :root {
+        --primary-color: #2c3e50; /* Azul Petróleo Profundo */
+        --secondary-color: #3498db; /* Azul Claro */
+        --accent-color: #e67e22; /* Laranja para destaques */
+        --bg-color: #f4f6f7;
+        --text-color: #333;
+        --light-gray: #ecf0f1;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 850px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      /* Header */
+      header {
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        margin: 0;
+        font-size: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        color: #7f8c8d;
+        margin-top: 5px;
+      }
+
+      /* Sections */
+      .section {
+        margin-bottom: 35px;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: 18px;
+        border-left: 5px solid var(--primary-color);
+        padding-left: 10px;
+        margin-bottom: 15px;
+      }
+
+      p,
+      li {
+        font-size: 14px;
+        color: #444;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      ul li {
+        padding: 5px 0;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      ul li::before {
+        content: "•";
+        color: var(--secondary-color);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+      }
+
+      /* Cards for Profiles */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--light-gray);
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #bdc3c7;
+      }
+
+      .card h3 {
+        margin-top: 0;
+        font-size: 16px;
+        color: var(--primary-color);
+      }
+
+      /* Alert Box for Validation */
+      .validation-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        padding: 20px;
+        border-radius: 5px;
+        color: #856404;
+      }
+
+      .validation-box h3 {
+        margin-top: 0;
+      }
+
+      /* Print Button */
+      .no-print {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background-color: #1a252f;
+      }
+
+      /* Footer */
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 12px;
+        color: #95a5a6;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+
+      /* Responsive Tweaks for sections 2 and 6 */
+      @media (max-width: 900px) {
+        .container {
+          padding: 25px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .card {
+          padding: 12px;
+        }
+        .card h3 {
+          font-size: 15px;
+        }
+      }
+
+      /* Print Specific Styles */
+      @media print {
+        body {
+          background-color: white;
+          padding: 0;
+        }
+        .container {
+          box-shadow: none;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          max-width: 100%;
+        }
+        .no-print {
+          display: none;
+        }
+        .card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="no-print">
+      <button onclick="window.print()">🖨️ Imprimir / Salvar como PDF</button>
+    </div>
+
+    <div class="container">
+      <header>
+        <h1>Proposta Técnica</h1>
+        <div class="subtitle">
+          Aplicativo de Gerenciamento de Poços Artesianos
+        </div>
+      </header>
+
+      <div class="section">
+        <h2>1. Objetivo do Sistema</h2>
+        <p>
+          Desenvolver uma plataforma moderna e automatizada para o registro
+          diário das leituras de horímetro e hidrômetro dos poços artesianos. O
+          sistema realizará cálculos automáticos de consumo, gerará relatórios
+          completos e emitirá alertas inteligentes caso alguma leitura não seja
+          realizada no horário estipulado.
+        </p>
+        <p>
+          <strong>Meta:</strong> Substituir o uso manual da planilha atual,
+          garantindo maior organização, precisão e segurança dos dados.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>2. Perfis de Usuários</h2>
+        <div class="grid-container">
+          <div class="card">
+            <h3>👤 Usuário Responsável (Coleta)</h3>
+            <ul>
+              <li>Recebe notificações no horário configurado.</li>
+              <li>Realiza o registro diário (horímetro/hidrômetro).</li>
+              <li>Visualiza seu próprio histórico de coletas.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🛡️ Administrador (Gestão)</h3>
+            <ul>
+              <li>Gerencia múltiplos poços e usuários.</li>
+              <li>Recebe alertas de falha de coleta.</li>
+              <li>Acompanha relatórios consolidados.</li>
+              <li>Exporta dados em PDF ou Excel.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. Cadastro dos Poços e Regras</h2>
+        <p>
+          Cada poço cadastrado no sistema conterá as seguintes definições para
+          padronização:
+        </p>
+        <ul>
+          <li>
+            <strong>Identificação:</strong> Nome do poço e Cliente/Condomínio
+            vinculado.
+          </li>
+          <li><strong>Localização:</strong> Dados geográficos.</li>
+          <li>
+            <strong>Responsáveis:</strong> Usuários atrelados àquele poço.
+          </li>
+          <li>
+            <strong>Horário Fixo:</strong> Janela de tempo para a coleta (ex.:
+            07h00).
+          </li>
+          <li>
+            <strong>Notificações:</strong> Configuração de alertas automáticos.
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>4. Fluxo Diário de Coleta</h2>
+        <ol style="font-size: 14px; color: #444; padding-left: 20px">
+          <li>
+            O sistema envia uma <strong>notificação</strong> ao usuário
+            responsável no horário configurado.
+          </li>
+          <li>
+            O usuário realiza a leitura e
+            <strong>registra os valores</strong> no aplicativo.
+          </li>
+          <li>
+            O sistema armazena as leituras e realiza todos os
+            <strong>cálculos automaticamente</strong>.
+          </li>
+        </ol>
+        <p><em>Em caso de falha na coleta:</em></p>
+        <ul>
+          <li>O usuário recebe lembretes de hora em hora.</li>
+          <li>O administrador recebe um alerta de "Não Conformidade".</li>
+          <li>O sistema marca o dia como "Falha de Coleta".</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. Cálculos Automáticos</h2>
+        <p>
+          A plataforma executará automaticamente os cálculos da planilha atual,
+          eliminando erros humanos:
+        </p>
+        <ul>
+          <li>Consumo diário em metros cúbicos (m³).</li>
+          <li>Horas trabalhadas (Diferença de horímetro).</li>
+          <li>Vazão média (quando aplicável).</li>
+          <li>Métricas históricas comparativas.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>6. Relatórios Gerenciais</h2>
+        <div class="grid-container">
+          <div
+            class="card"
+            style="
+              background: #fff;
+              border-left: 3px solid var(--secondary-color);
+            "
+          >
+            <h3>📊 Relatório por Período</h3>
+            <ul>
+              <li>Total consumido no período.</li>
+              <li>Média diária e horas de funcionamento.</li>
+              <li>Gráficos de evolução.</li>
+              <li>Exportação PDF/Excel.</li>
+            </ul>
+          </div>
+          <div
+            class="card"
+            style="background: #fff; border-left: 3px solid #e74c3c"
+          >
+            <h3>⚠️ Relatório de Falhas</h3>
+            <ul>
+              <li>Dias sem coleta realizada.</li>
+              <li>Responsáveis que não cumpriram o horário.</li>
+              <li>Log para auditoria.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>7. Benefícios do Sistema</h2>
+        <ul>
+          <li>✅ <strong>Automação:</strong> Fim dos cálculos manuais.</li>
+          <li>
+            ✅ <strong>Segurança:</strong> Histórico organizado e backup em
+            nuvem.
+          </li>
+          <li>
+            ✅ <strong>Proatividade:</strong> Alertas garantem que a coleta não
+            seja esquecida.
+          </li>
+          <li>
+            ✅ <strong>Gestão:</strong> Relatórios profissionais instantâneos.
+          </li>
+        </ul>
+      </div>
+
+      <div class="section validation-box">
+        <h3>📝 Validação do Escopo</h3>
+        <p>
+          Antes de iniciarmos a prototipação das telas, solicitamos a
+          confirmação:
+        </p>
+        <ul>
+          <li>
+            As funcionalidades apresentadas atendem às necessidades atuais?
+          </li>
+          <li>Existe alguma regra de cálculo específica não mencionada?</li>
+          <li>O fluxo de notificações está adequado à operação?</li>
+        </ul>
+      </div>
+
+      <footer>
+        <p>Documento gerado para validação de projeto de software.</p>
+      </footer>
+    </div>
+  </body>
+</html>
